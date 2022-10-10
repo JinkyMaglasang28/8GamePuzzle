@@ -8,36 +8,39 @@ from tkinter import ttk
 #from typing_extensions import Self
 
 root = Tk()
-root.geometry("1350x700+0+0")
+root.geometry("1000x600+0+0")
 root.title("8 Puzzle Game")
-root.configure(background = 'white')
+root.configure(background = 'beige')
 
-Tops = Frame(root, bg = 'black', pady = 2, width = 1350, height = 100, relief = RIDGE)
+Tops = Frame(root, bg = 'white', width = 900, height = 50)
 Tops.grid(row = 0, column = 0)
     
-lblTitle = Label(Tops, font = ('arial', 80, 'bold'), text = "Advanced Puzzle Game", bd = 10, bg = 'black'
-,fg = 'Cornsilk', justify = CENTER)
-lblTitle.grid(row = 0, column = 0)
+lblTitle = Label(Tops, font = ('mathsans', 40, 'italic'), text = "8 Puzzle Game", bd = 0, bg = 'beige'
+,fg = 'black', justify = CENTER)
+lblTitle.grid(row = 0, column = 0)  
 
-MainFrame = Frame(root, bg = 'pink', bd = 10, width = 1350, height = 600, relief = RIDGE)
-MainFrame.grid(row = 1, column = 0, padx = 30)
+MainFrame = Frame(root, bg = 'beige', bd = 10, width = 1100, height = 700)
+MainFrame.grid(row = 1, column = 0, padx = 40, pady = 40)
 
-LeftFrame = Frame(MainFrame, bd = 10, width = 700, height = 500, pady = 2, bg = 'pink', relief = RIDGE)
+LeftFrame = Frame(MainFrame, bd = 0, width = 400, height = 300, pady = 2, bg = "beige")
 LeftFrame.pack(side = LEFT)
 
-RightFrame = Frame(MainFrame, bd = 10, width = 540, height = 500, padx = 1, pady = 2, bg = "pink", relief = RIDGE)
+RightFrame = Frame(MainFrame, bd = 0, width = 540, height = 500, padx = 1, pady = 4, bg = "beige")
 RightFrame.pack(side = RIGHT)
 
-RightFrame1 = Frame(RightFrame, bd = 10, width = 540, height = 200, padx = 10, pady = 2, bg = "pink", relief = RIDGE)
+RightFrame1 = Frame(RightFrame, bd = 0, width = 540, height = 100, padx = 30, pady = 4, bg = "beige")
 RightFrame1.grid(row = 0, column = 0)
 
-RightFrame2a = Frame(RightFrame, bd = 10, width = 540, height = 140, padx = 10, pady = 2, bg = "pink", relief = RIDGE)
+RightFrame2a = Frame(RightFrame, bd = 0, width = 540, height = 100, padx = 30, pady = 4, bg = "beige")
 RightFrame2a.grid(row = 1, column = 0)
 
-RightFrame2b = Frame(RightFrame, bd = 10, width = 540, height = 140, padx = 10, pady = 2, bg = "pink", relief = RIDGE)
+RightFrame2b = Frame(RightFrame, bd = 0, width = 540, height = 100, padx = 30, pady = 4, bg = "beige")
 RightFrame2b.grid(row = 2, column = 0)
 
-numberOfClicks = 0
+RightFrame2c = Frame(RightFrame, bd = 0, width = 540, height = 100, padx = 30, pady = 4, bg = "beige")
+RightFrame2c.grid(row = 3, column = 0)
+
+numberOfClicks = 0  
 displayClicks = StringVar()
 displayClicks.set("Number of Clicks" + "\n" + "0")
 
@@ -59,16 +62,16 @@ class Button_:
         self.textTaken.set(text_)
         self.x = x
         self.y = y
-        self.btnNumber = Button(LeftFrame, textvariable = self.textTaken, font = ('arial', 80), bd = 3,
+        self.btnNumber = Button(LeftFrame, textvariable = self.textTaken, bg = "khaki", font = ('arial', 40), bd = 3,
                 command = lambda i = self.x, j = self.y : emptySpotChecker(i, j))
-        self.btnNumber.place(x = self.x*150, y = self.y*150, width = 170, height = 170)
+        self.btnNumber.place(x = self.x*100, y = self.y*100, width = 100, height = 100)
 
 def shuffle():
     global btnNumbers, numberOfClicks
     nums = []
-    for x in range (8):
+    for x in range (12):
         x += 1
-        if x == 8:
+        if x == 12:
             nums.append("")
         else:
             nums.append(str(x))
@@ -81,9 +84,13 @@ def shuffle():
     upDateCounter()
     gameStateUpdate("")
 
-lblDisplayClicks = Label(RightFrame1, textvariable = displayClicks, font = ('arial', 40)).place(x = 0, y = 10, width = 480, height = 150)
-btnShuffle = Button(RightFrame2a, text = "New Game", font = ('arial', 40), bd = 5, command = shuffle).place(x = 0, y = 10, width = 480, height = 100)
-lblDisplayClicks = Label(RightFrame2b, textvariable = gameStatesString, font = ('arial', 40)).place(x = 0, y = 10, width = 480, height = 100)
+#def solve():
+
+
+lblDisplayClicks = Label(RightFrame1, textvariable = displayClicks, bg = "grey", font = ('arial', 20)).place(x = 0, y = 10, width = 480, height = 100)
+btnShuffle = Button(RightFrame2a, text = "Shuffle", font = ('arial', 20), bg = "grey", command = shuffle).place(x = 0, y = 10, width = 480, height = 100)
+btnSolve = Button(RightFrame2b, text = "Solve", font = ('arial', 20), bg = "grey", command = shuffle).place(x = 0, y = 10, width = 480, height = 100)
+lblDisplayClicks = Label(RightFrame2c, textvariable = gameStatesString, bg = "grey", font = ('arial', 40)).place(x = 0, y = 10, width = 480, height = 100)
 
 btnNumbers = []
 
@@ -93,7 +100,7 @@ for y in range(3):
     btnNumbers_ = []
     for x in range(4):
         name += 1
-        if name == 8:
+        if name == 12:
             name = ""
         
         btnNumbers_.append(Button_(str(name), x, y))
@@ -137,5 +144,6 @@ def winCheck():
                 break
             if not lost:
                 gameStateUpdate("You are a winner!")
+
 
 root.mainloop()
