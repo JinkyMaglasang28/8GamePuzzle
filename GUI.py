@@ -5,7 +5,9 @@ import random
 import time
 from tkinter import *
 from tkinter import ttk
-#from typing_extensions import Self
+
+from solver import Solver
+from bfs import BFS
 
 root = Tk()
 root.geometry("1000x600+0+0")
@@ -22,7 +24,7 @@ lblTitle.grid(row = 0, column = 0)
 MainFrame = Frame(root, bg = 'beige', bd = 10, width = 1100, height = 700)
 MainFrame.grid(row = 1, column = 0, padx = 40, pady = 40)
 
-LeftFrame = Frame(MainFrame, bd = 0, width = 400, height = 300, pady = 2, bg = "beige")
+LeftFrame = Frame(MainFrame, bd = 0, width = 400, height = 300, padx = 1, pady = 2, bg = "beige")
 LeftFrame.pack(side = LEFT)
 
 RightFrame = Frame(MainFrame, bd = 0, width = 540, height = 500, padx = 1, pady = 4, bg = "beige")
@@ -69,9 +71,9 @@ class Button_:
 def shuffle():
     global btnNumbers, numberOfClicks
     nums = []
-    for x in range (12):
+    for x in range (9):
         x += 1
-        if x == 12:
+        if x == 9:
             nums.append("")
         else:
             nums.append(str(x))
@@ -84,12 +86,9 @@ def shuffle():
     upDateCounter()
     gameStateUpdate("")
 
-#def solve():
-
-
 lblDisplayClicks = Label(RightFrame1, textvariable = displayClicks, bg = "grey", font = ('arial', 20)).place(x = 0, y = 10, width = 480, height = 100)
 btnShuffle = Button(RightFrame2a, text = "Shuffle", font = ('arial', 20), bg = "grey", command = shuffle).place(x = 0, y = 10, width = 480, height = 100)
-btnSolve = Button(RightFrame2b, text = "Solve", font = ('arial', 20), bg = "grey", command = shuffle).place(x = 0, y = 10, width = 480, height = 100)
+btnSolve = Button(RightFrame2b, text = "Solve", font = ('arial', 20), bg = "grey", command = BFS).place(x = 0, y = 10, width = 480, height = 100)
 lblDisplayClicks = Label(RightFrame2c, textvariable = gameStatesString, bg = "grey", font = ('arial', 40)).place(x = 0, y = 10, width = 480, height = 100)
 
 btnNumbers = []
@@ -98,15 +97,18 @@ name = 0
 
 for y in range(3):
     btnNumbers_ = []
-    for x in range(4):
+    for x in range(3):
         name += 1
-        if name == 12:
+        if name == 9:
             name = ""
         
         btnNumbers_.append(Button_(str(name), x, y))
     btnNumbers.append(btnNumbers_)
 
 shuffle()
+
+#def solve():
+
 
 def emptySpotChecker(y, x):
     global btnNumbers, numberOfClicks
@@ -143,7 +145,7 @@ def winCheck():
                 lost = True
                 break
             if not lost:
-                gameStateUpdate("You are a winner!")
+                gameStateUpdate("You are a winner!")    
 
 
 root.mainloop()
